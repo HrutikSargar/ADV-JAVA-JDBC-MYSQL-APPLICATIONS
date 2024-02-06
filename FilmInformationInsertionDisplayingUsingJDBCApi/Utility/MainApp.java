@@ -1,18 +1,11 @@
 package JDBCFinalTest.Question1.Utility;
 
 import JDBCFinalTest.Question1.Model.Film;
-
 import javax.swing.text.DefaultEditorKit;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//Write a java program to store values into your
-//        database. Accept film_id,film_name , film_year ,
-//        film_lang, film_rating from the end user and store them
-//        into your database table.
-//        (Note: id should be auto incremented and use
-//        Prepared-Statement Interface.)
 public class MainApp {
     private  static FilmINterFace filmOperation=new filmOperationDAO();
     private static Scanner scanner=new Scanner(System.in);
@@ -87,11 +80,5 @@ public class MainApp {
         }else {
             System.out.println("SOMETHING WENT WRONG !!!");
         }
-
-
-
-
-
     }
-
 }
