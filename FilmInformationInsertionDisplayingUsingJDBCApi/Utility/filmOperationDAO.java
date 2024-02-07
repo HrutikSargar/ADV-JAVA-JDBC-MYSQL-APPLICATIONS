@@ -15,6 +15,11 @@ public class filmOperationDAO implements FilmINterFace{
     private static ResultSet resultSet=null;
     private  static String INsertQuery="insert into Film values(?,?,?,?,?)";
     private static String displayAllFilm="select * from Film";
+
+    private static String updateFilmName="update film set film_name=? where film_id=?";
+    private static String updateFilmYear="update film set film_year=? where film_name=?";
+    private static String updateFilmLang="update film set film_lang=? where film_name=?";
+    private static String updateFilmRating="update film set film_rating=? where film_name=?";
     @Override
     public int addFilm(Film film) {
         try {
@@ -52,6 +57,60 @@ public class filmOperationDAO implements FilmINterFace{
             }
             return data;
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int updateFilmName(Film film) {
+        try {
+            preparedStatement=connection.prepareStatement(updateFilmName);
+            preparedStatement.setString(1,film.getFilm_name());
+            preparedStatement.setInt(2,film.getFilm_id());
+
+           int count= preparedStatement.executeUpdate();
+           return count;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+       // return 0;
+    }
+
+    @Override
+    public int updateFilmYear(Film film) {
+        try {
+            preparedStatement=connection.prepareStatement(updateFilmYear);
+            preparedStatement.setInt(1,film.getFilm_year());
+            preparedStatement.setString(2,film.getFilm_name());
+           int count= preparedStatement.executeUpdate();
+           return count;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int updateFilmLang(Film film) {
+        try {
+            preparedStatement=connection.prepareStatement(updateFilmLang);
+            preparedStatement.setString(1,film.getFilm_lang());
+            preparedStatement.setString(2,film.getFilm_name());
+           int count= preparedStatement.executeUpdate();
+           return count;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int updateFilmRating(Film film) {
+        try {
+            preparedStatement=connection.prepareStatement(updateFilmRating);
+            preparedStatement.setDouble(1,film.getFilm_rating());
+            preparedStatement.setString(2,film.getFilm_name());
+            int count=preparedStatement.executeUpdate();
+            return count;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
