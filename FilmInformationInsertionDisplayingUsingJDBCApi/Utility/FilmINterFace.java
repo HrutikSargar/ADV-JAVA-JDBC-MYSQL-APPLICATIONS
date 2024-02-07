@@ -8,4 +8,9 @@ public interface FilmINterFace {
     int addFilm(Film film);
 
     ArrayList<Film> displayFilmData();
+
+    int updateFilmName(Film film);
+    int updateFilmYear(Film film);
+    int updateFilmLang(Film film);
+    int updateFilmRating(Film film);
 }
