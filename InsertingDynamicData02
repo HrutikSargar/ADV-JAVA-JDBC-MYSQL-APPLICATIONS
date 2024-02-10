@@ -1,0 +1,54 @@
+package Insertdata;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+
+public class _04DymanaicInsertData {
+    private static Connection connection;
+    private static Scanner scanner=new Scanner(System.in);
+    static {
+        try {
+            connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/advancejavajdbc","root","hrutik");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void main(String[] args) {
+        operation();
+    }
+    private static void operation(){
+        System.out.println("Enter Employee ID :");
+        int id= scanner.nextInt();
+
+        System.out.println("Enter employee Name:");
+        scanner.nextLine();
+        String name= scanner.nextLine();
+
+        System.out.println("Enter Employee Dept:");
+        String dept= scanner.next();
+
+        System.out.println("Enter Employee salary:");
+        double salary= scanner.nextDouble();
+
+        String query="insert into employee values("+id+",'"+name+"','"+dept+"',"+salary+")";
+
+        try {
+            Statement statement=connection.createStatement();
+            int count = statement.executeUpdate(query);
+
+            if (count>0){
+                System.out.println(count+" record inserted successfully");
+            }else {
+                System.out.println("Unable to insert data");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+}
