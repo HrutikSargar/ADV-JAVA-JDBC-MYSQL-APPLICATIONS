@@ -1,0 +1,42 @@
+package Insertdata;
+
+import java.sql.*;
+import java.util.ArrayList;
+
+public class _05_RetriveData {
+    private static Connection connection;
+    static {
+        try {
+            connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/advancejavajdbc","root","hrutik");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static void main(String[] args) {
+        operation();
+    }
+    private static void operation(){
+        String query="select * from employee";
+        try {
+            ArrayList a1=new ArrayList<>();
+
+            Statement statement=connection.createStatement();
+            //Resultset is an interface (Which has next() inbuilt method )
+            ResultSet rs=statement.executeQuery(query);
+//            a1=a1.
+            System.out.println("=================================");
+            while(rs.next()){
+                System.out.print(rs.getInt(1)+"\t");
+                System.out.print(rs.getString(2)+"\t");
+                System.out.print(rs.getString(3)+"\t");
+                System.out.print(rs.getDouble(4)+"\t");
+                System.out.println();
+            }
+            System.out.println("=================================");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+}
