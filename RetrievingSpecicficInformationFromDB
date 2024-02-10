@@ -1,0 +1,25 @@
+package Insertdata;
+
+import java.sql.*;
+
+public class _06_RetriveData {
+    public static void main(String[] args) throws SQLException {
+        Connection con=null;
+        Statement st=null;
+        ResultSet rs=null;
+
+        try{
+            con= DriverManager.getConnection("jdbc:mysql://localhost:3306/advancejavajdbc","root","hrutik");
+            st= con.createStatement();
+
+            String s1="select emp_name,emp_salary from employee";
+            rs= st.executeQuery(s1);
+            System.out.println("Name\tSalary");
+            while (rs.next()){
+                System.out.println(rs.getString(1)+"\t"+rs.getDouble(2));
+            }
+        }catch (SQLException e){
+            throw  new RuntimeException(e);
+        }
+    }
+}
