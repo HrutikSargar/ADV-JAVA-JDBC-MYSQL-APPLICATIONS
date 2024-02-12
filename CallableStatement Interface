@@ -1,0 +1,18 @@
+import java.sql.*;
+
+public class _05_CallableInterface_EvenOrOdd {
+    public static void main(String[] args) {
+        try {
+            Connection connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/advancejavajdbc","root","hrutik");
+            CallableStatement callableStatement=connection.prepareCall("select evenOrOdd(?)");
+
+            callableStatement.setInt(1,12);
+            ResultSet rs=callableStatement.executeQuery();
+            if (rs.next()){
+                System.out.println(rs.getString(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
