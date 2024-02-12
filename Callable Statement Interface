@@ -1,0 +1,37 @@
+import java.sql.*;
+import java.util.Scanner;
+
+public class _06_callableInterface_MaxOfThree {
+    private static final String path="jdbc:mysql://localhost:3306/advancejavajdbc";
+    private static final String userName="root";
+    private static final String password="hrutik";
+    public static void main(String[] args) {
+        Scanner scanner=new Scanner(System.in);
+
+        System.out.println("enter no1 :");
+        int no1= scanner.nextInt();
+
+        System.out.println("enter no2 :");
+        int no2= scanner.nextInt();
+
+        System.out.println("enter no3 :");
+        int no3= scanner.nextInt();
+
+        try {
+            Connection connection= DriverManager.getConnection(path,userName,password);
+            CallableStatement callableStatement=connection.prepareCall("select maxOfThree(?,?,?)");
+            callableStatement.setInt(1,no1);
+            callableStatement.setInt(2,no2);
+            callableStatement.setInt(3,no3);
+
+            ResultSet resultSet=callableStatement.executeQuery();
+            if (resultSet.next()){
+                System.out.println("Maximum of Three : "+resultSet.getInt(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+}
