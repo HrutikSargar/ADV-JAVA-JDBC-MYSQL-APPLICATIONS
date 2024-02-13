@@ -1,0 +1,57 @@
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+public class _08_StoredProcedure_callableStmt {
+    private static final String path="jdbc:mysql://localhost:3306/advancejavajdbc";
+    private static final String userName="root";
+    private static final String password="hrutik";
+
+    public static void main(String[] args) {
+        Scanner scanner= new Scanner(System.in);
+
+        System.out.print("Enter Emp id: ");
+        int empId= scanner.nextInt();
+        System.out.print("Enter Emp Name: ");
+        String empName= scanner.next();
+        System.out.print("Enter Emp dept: ");
+        String empDept= scanner.next();
+
+        System.out.print("Enter Emp Salary: ");
+        double empSalary= scanner.nextDouble();
+
+        System.out.print("Enter User name: ");
+        String userName1= scanner.next();
+
+        System.out.print("Enter User Email id: ");
+        String userEmailId = scanner.next();
+
+        System.out.print("Enter User mobileNo: ");
+        String userMobileNo= scanner.next();
+        System.out.print("Enter User Password: ");
+        String userPassword= scanner.next();
+
+        try {
+            Connection con= DriverManager.getConnection(path,userName,password);
+            CallableStatement callableStatement= con.prepareCall("{call empProcedure(?,?,?,?,?,?,?,?)}");
+            callableStatement.setInt(1,empId);
+            callableStatement.setString(2,empName);
+            callableStatement.setString(3,empDept);
+            callableStatement.setDouble(4,empSalary);
+            callableStatement.setString(5,userName1);
+            callableStatement.setString(6, userEmailId);
+            callableStatement.setString(7,userMobileNo);
+            callableStatement.setString(8,userPassword);
+
+           int count=callableStatement.executeUpdate();
+            System.out.println(count+" record inserted");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+}
