@@ -1,0 +1,34 @@
+import java.sql.*;
+import java.util.Scanner;
+
+public class _07_CallableInterface {
+
+    private static final String path="jdbc:mysql://localhost:3306/advancejavajdbc";
+    private static final String userName="root";
+    private static final String password="hrutik";
+    public static void main(String[] args) {
+        Scanner sc= new Scanner(System.in);
+        try {
+            System.out.println("Enter marks of Sub1:");
+            double marks1= sc.nextDouble();
+            System.out.println("Enter marks of Sub2:");
+            double marks2= sc.nextDouble();
+            System.out.println("Enter marks of Sub3:");
+            double marks3= sc.nextDouble();
+
+            Connection connection= DriverManager.getConnection(path,userName,password);
+            CallableStatement callableStatement=connection.prepareCall("select percentageOfThree(?,?,?)");
+            callableStatement.setDouble(1,marks1);
+            callableStatement.setDouble(2,marks2);
+            callableStatement.setDouble(3,marks3);
+
+            ResultSet rs=callableStatement.executeQuery();
+
+            if (rs.next()){
+                System.out.println("Res is "+rs.getString(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
