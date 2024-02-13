@@ -1,0 +1,25 @@
+import java.sql.*;
+
+public class _09_StoredProcedure_DisplayData {
+    public static void main(String[] args) {
+        try {
+            Connection connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/advancejavajdbc","root","hrutik");
+           CallableStatement callableStatement= connection.prepareCall("{ call demo2()}");
+          ResultSet resultSet= callableStatement.executeQuery();
+          System.out.println("EId\tEName\tEDept\tESalary");
+          while (resultSet.next()){
+              System.out.println(resultSet.getInt(1)+"\t"+resultSet.getString(2)+"\t"+resultSet.getString(3)+"\t"+resultSet.getDouble(4));
+          }
+          if (callableStatement.getMoreResults()){
+              ResultSet rs2=callableStatement.getResultSet();
+              rs2.getInt(1);
+              rs2.getString(2);
+              rs2.getString(3);
+              rs2.getString(4);
+          }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
