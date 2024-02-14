@@ -1,0 +1,35 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class InsertImageIntoDatabase {
+    private static final String path="jdbc:mysql://localhost:3306/advancejavajdbc";
+    private static final String userName="root";
+    private static final String password="hrutik";
+
+    public static void main(String[] args) {
+
+        try {
+            FileInputStream file=new FileInputStream("C:\\Users\\Hrutik\\OneDrive\\Desktop\\StarPatterns.jpeg");
+            String query="insert into whatsappaccount values(?,?,?,?)";
+            Connection connection= DriverManager.getConnection(path,userName,password);
+            PreparedStatement preparedStatement=connection.prepareStatement(query);
+            preparedStatement.setInt(1,0);
+            preparedStatement.setString(2,"ANIKET");
+            preparedStatement.setInt(3,12345);
+            preparedStatement.setBlob(4,file);
+
+            int count=preparedStatement.executeUpdate();
+
+            System.out.println(count+ " data inserted successfully!!!");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+}
