@@ -1,0 +1,21 @@
+import java.sql.*;
+
+public class CallableInterfaceCallMethod {
+    public static void main(String[] args) {
+        try {
+            Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/advancejavajdbc","root","hrutik");
+            CallableStatement callableStatement=con.prepareCall("{?=call addTwoNumbers(?,?)}");
+            callableStatement.setInt(2,13);
+            callableStatement.setInt(3,24);
+            callableStatement.registerOutParameter(1,Types.INTEGER);//for first parameter of query // we have given here datatype
+
+            ResultSet rs=callableStatement.executeQuery();
+            if (rs.next()){
+                System.out.println(rs.getInt(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+}
